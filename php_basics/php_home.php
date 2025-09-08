@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <!--begin header-->
+
     <head>
-        <h1> Welcome!</h1>
+        <link rel="stylesheet" href="style.css"/>
     </head>
-    <!--end header-->
 
 
-    <!--begin body-->
     <body>
-        <a href="php_home.php"> HOME </a> <br>
-        <a href="php_about.php"> ABOUT </a> <br>
-        <a href="php_contact.php"> CONTACT </a> <br>
-        <br><br>
+
+        <!--begin header-->
+        <header>
+            <h1> Welcome!</h1>
+        </header>
+        <!--end header-->
+
+        <!--begin section-->
+        <section>
+            <!--list--> 
+            <ul class="menu"> 
+                <li> <a href="php_home.php"> HOME </a> </li>
+                <li> <a href="php_about.php"> ABOUT </a> </li>
+                <li> <a href="php_contact.php"> CONTACT </a> </li>
+            </ul>
+            <br>
+        </section>
+        <!--end section-->
+
+        <!--begin footer-->
+        <footer>
+            &copy
+            2010-<?php echo date("Y");?>
+        </footer>
+        <!--end footer-->
+    
     </body>
-    <!--end body-->
-
-
-    <!--begin footer-->
-    <footer>
-        &copy
-        2010-<?php echo date("Y");?>
-    </footer>
-    <!--end footer-->
-
-
 </html>
