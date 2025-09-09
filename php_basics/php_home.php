@@ -29,7 +29,7 @@
         <!--begin footer-->
         <footer>
             &copy
-            2010-<?php echo date("Y");?>
+            2010-<?php echo date('Y');?>
         </footer>
         <!--end footer-->
     
