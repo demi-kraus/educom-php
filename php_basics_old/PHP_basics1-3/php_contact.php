@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <link rel="stylesheet" href="style.css"/>
+        <link rel="stylesheet" href="../style.css"/>
     </head>
 
 
@@ -35,19 +35,19 @@
                 } else{
                     $name = $_POST["name"];
                 }
-            if (empty($_POST["email"])) {
-                    $error = "* All fields are required";
-                } else{
-                    $email = $_POST["email"];
-                }
-            if (empty($_POST["message"])) {
-                    $error = "* All fields are required";
-                } else{
-                    $message = $_POST["message"];
-                }
+                if (empty($_POST["email"])) {
+                        $error = "* All fields are required";
+                    } else{
+                        $email = $_POST["email"];
+                    }
+                if (empty($_POST["message"])) {
+                        $error = "* All fields are required";
+                    } else{
+                        $message = $_POST["message"];
+                    }
             
-            if (empty($error)){
-                $action = "form_results.php";
+                if (empty($error)){
+                    $action = "form_results.php";
             }
             }
             
