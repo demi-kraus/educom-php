@@ -30,10 +30,83 @@ function showMenu($menu){
 }
 
 // =========================
-// Test POST for login
+// Login or Register
 // =========================
 
+//login
+function login($email, $password){
+    global $login, $username, $page, $error;
 
+    $conn = connectMysql();
+    $result = findEmail($conn, $email);
+    $row = $result->fetch_assoc();
+    // check number if rows, if =1 than check password, otherwise invalid & check password
+    if (($result->num_rows == 1) and (strcmp($password, $row['password']) == 0)){  
+        $login = true;
+        $username = $row['name'];
+    } else {
+        $error = 'Invalid Credentials';
+        $page = $_POST['page'];
+    }
+    closeMysql($conn);
+}
+//register
+function register($email, $password, $repeat_password){
+    global $username, $page, $error;
+    $conn = connectMysql();
+    $result = findEmail($conn, $email);
+    $row = $result->fetch_assoc();
+
+    // check number if rows if 0 and passwords map add user. otherwise
+    if ($result->num_rows > 0) {
+        $error = 'E-mail is already registerd';
+        $page = $_POST['page'];
+    }elseif (($result->num_rows == 0) and (strcmp($password, $repeat_password) != 0)){  
+        $error = 'Passwords do not match';
+        $page = $_POST['page'];
+    } elseif(($result->num_rows == 0) and (strcmp($password, $repeat_password) == 0)){
+        // add data to table
+        $stmt = $conn->prepare("INSERT INTO users (email, name, password) VALUES (?,?,?)");
+        $stmt->bind_param('sss', $email, $username, $password);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    closeMysql($conn);
+
+}
+//connect to mysql
+function connectMysql(){
+    $servername_mysql = "localhost";
+    $username_mysql = "root";
+    $password_mysql = "TrinaDePipa";
+    $dbname = "myDB";
+
+    // Create connection
+    $conn = new mysqli($servername_mysql, $username_mysql, $password_mysql, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
+}
+
+//find results email in table
+function findEmail($conn, $email){
+    // find row where email = email
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+    return $result;
+}
+//close mysql connection
+function closeMysql($conn){
+    $conn->close();
+}
 
 // =========================
 // form

@@ -10,6 +10,7 @@ body{
 header{
     height: 48px;
     text-align:center;
+    padding: 10px;
     color: #000;
 }
 
@@ -22,6 +23,7 @@ ul.menu li {
     width: auto;
     height: auto;
     padding: 5px;
+    margin-bottom: 20px;
     background-color: blue;
 }
 

@@ -1,10 +1,8 @@
 <?php
 include('includes/functions.php');
 // page
-
 $page = isset($_GET['page']) ? $_GET['page'] : "home";
 $login = false;
-$error = '';
 
 // test POST 
 include('includes/handlers.php');
@@ -12,8 +10,9 @@ include('includes/handlers.php');
 // header
 include('header.php');
 
-echo '<span class="error">'.$error.'</span><br>';
-
+if (isset($error)){
+    echo '<span class="error">'.$error.'</span><br>';
+    }
 
 // page
 switch($page){
@@ -35,7 +34,6 @@ switch($page){
     default:
         include('pages/home.php');
 }
-
 
 // footer
 include('footer.php')
