@@ -1,5 +1,6 @@
 
 <?php 
+// show form results
 echo '<h2> Form results:</h2>';
 $name = $_POST["name"];  
 $email = $_POST["email"];

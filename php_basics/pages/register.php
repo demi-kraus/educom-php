@@ -1,4 +1,5 @@
 <?php
+// register form info
 $register_info = [];
 
 $register_fields['name'] = ['label' => 'Naam' , 'type' => 'text', 'value'=>''];
@@ -8,8 +9,7 @@ $register_fields['repeat_password'] = ['label' => 'Herhaal Wachtwoord' , 'type' 
 
 $register_info['page'] = 'register';
 $register_info['fields'] = $register_fields;
-// $login_info['page'] = $page;
 
-
+// show form
 showForm($register_info);
 ?>

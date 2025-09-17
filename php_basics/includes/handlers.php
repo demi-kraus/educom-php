@@ -1,16 +1,16 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
+if (($_SERVER["REQUEST_METHOD"] == "POST") and (isset($_POST['page']))){
 
     switch($_POST['page']){
         case 'form_results':
             $page = $_POST['page'];
             break;
+            
         case 'login':
             // test login'
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
             login($email, $password);
-            // include('mysql.php');
             break;
 
         case 'register':
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $username = $_POST['name'];
             $password = trim($_POST['password']);
             $repeat_password = trim($_POST['repeat_password']);
-            register($email, $password, $repeat_password);
+            register($email, $username, $password, $repeat_password);
             break;
     }
 }

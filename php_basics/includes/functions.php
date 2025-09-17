@@ -14,7 +14,7 @@ function stylePage($cssfile = '"css/style.css"'){
 function showHeader($title){
 
     echo "<header> 
-            <h1> $title <h1>
+            <h1> $title </h1>
           </header>";
 }
 
@@ -24,6 +24,7 @@ function showHeader($title){
 function showMenu($menu){
     echo "<ul class=\"menu\"> ";
     foreach ($menu as $item => $link){
+        // $item = strtoupper($item);
        echo "<li> <a href= \"".$link."\">". $item . "</a> </li>";
     }
     echo "</ul>";
@@ -35,15 +36,16 @@ function showMenu($menu){
 
 //login
 function login($email, $password){
-    global $login, $username, $page, $error;
+    global $login, $page, $error;
 
     $conn = connectMysql();
     $result = findEmail($conn, $email);
     $row = $result->fetch_assoc();
     // check number if rows, if =1 than check password, otherwise invalid & check password
     if (($result->num_rows == 1) and (strcmp($password, $row['password']) == 0)){  
-        $login = true;
-        $username = $row['name'];
+        // $login = true;
+        $_SESSION['login'] = true;
+        $_SESSION['username']  = $row['name'];
     } else {
         $error = 'Invalid Credentials';
         $page = $_POST['page'];
@@ -51,12 +53,11 @@ function login($email, $password){
     closeMysql($conn);
 }
 //register
-function register($email, $password, $repeat_password){
-    global $username, $page, $error;
+function register($email, $username,$password, $repeat_password){
+    global $page, $error;
     $conn = connectMysql();
     $result = findEmail($conn, $email);
     $row = $result->fetch_assoc();
-
     // check number if rows if 0 and passwords map add user. otherwise
     if ($result->num_rows > 0) {
         $error = 'E-mail is already registerd';
@@ -80,7 +81,7 @@ function connectMysql(){
     $servername_mysql = "localhost";
     $username_mysql = "root";
     $password_mysql = "TrinaDePipa";
-    $dbname = "myDB";
+    $dbname = "mydb";
 
     // Create connection
     $conn = new mysqli($servername_mysql, $username_mysql, $password_mysql, $dbname);
