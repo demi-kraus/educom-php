@@ -1,7 +1,7 @@
 <?php
 stylePage();
 // header
-$title = 'Welcome!';
+$title = 'WELCOME!';
 showHeader($title);
 
 // show Menu;
