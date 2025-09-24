@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require_once('DataBase.php');
-require_once('Controller.php');
+require_once('models/DataBase.php');
+require_once('controllers/Controller.php');
 
 // set up Database
 $servername = "localhost"; 
@@ -15,7 +15,5 @@ $db = new DataBase($servername, $username, $password, $dbname);
 // start controller
 $controller = new Controller($db);
 $controller->handleRequest();
-
-
 
 ?>

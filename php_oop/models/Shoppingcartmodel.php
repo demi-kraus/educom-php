@@ -32,6 +32,26 @@ class ShoppingcartModel{
             }
         return array('items'=> $items, 'total' => $total_price);
         }
+
+    function checkout(){
+
+        // write orders to database
+        $stmt = $db->prepare("INSERT INTO orders ( name, price, amount, item_id) VALUES (?,?,?,?)");
+        $stmt->bind_param("sdii", $name, $price, $amount, $item_id);
+
+        $items = $this->getOrders()
+
+        foreach ($items['items'] as $item){
+            $name = $item['name'];
+            $price = $item['price'];
+            $amount = $item['count'];
+            $item_id = $item['id'];
+            $stmt->execute();
+        }
+        //close connection mysql
+        $stmt->close();
+        reset($_SESSION['orders']); //beter dan session_unset()?
+    }
 }
 
 

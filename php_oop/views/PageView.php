@@ -21,7 +21,7 @@ class PageView{
     }
 
     function beginDoc() { 
-        $cssfile = '"css/style.css"';
+        $cssfile = '"../css/style.css"';
         echo "<head>
             <link rel=\"stylesheet\" href= $cssfile/>
         </head>";
