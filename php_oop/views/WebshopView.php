@@ -1,0 +1,51 @@
+<?php
+require_once('PageView.php');
+
+class WebshopView extends PageView{
+    $db;
+    function __construct($db){
+        $this->db = $db;
+    }
+    function bodyContent(){
+        $this->showItemList;
+    }
+
+    function showItemList(){
+        // Get webshop items from database
+        $result = $db->qetQueryResults('SELECT * FROM webshop_items');
+
+        $page = "index.php?page=webshop_item"; 
+
+        // show webshop items
+        while($row = $result->fetch_assoc()) {
+            $item_page = $page.'&id='.$row['id']; // link for item page 
+            // for each item show name, image, price
+            // when logged in show order button !!!
+            echo '<section class="webshop-item">';
+            echo '<a href='.$item_page.'>'.ucfirst($row['name']).' </a>'; // name with link to item page
+            echo '<img src= "images/'.$row['image'].'" alt = "webshopitem" width = 100 >'; // item image
+            echo '<br><span> &euro; '.$row['price'].' </span>' ; //item price
+
+            if ($_SESSION['login']){ //show only when logged in
+                $this->orderButton($row['id'], );
+                }
+            echo '</section>';
+            }
+    }
+    function orderButton($value, $type='order'){
+        switch($type){
+            case 'order':
+                $name = 'item_id';
+                break;
+            case 'checkout':
+                $name = 'checkout';
+                break;
+        }
+        echo '<form action="" method="POST">
+                <input type="hidden" name="'.$name.'" value="'.$value.'" >
+                <input class="order-button" type="submit" value= "'.$type.'">
+              </form>';
+
+    }
+}
+?>

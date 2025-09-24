@@ -335,8 +335,7 @@ function closeForm(){
 // show footer
 // =========================
 function showFooter(){
-    echo "<footer> &copy 2010-".date('Y')."</footer>";
-   
+    echo "<footer> &copy 2010-".date('Y')."</footer>"; 
 }
 
 ?>
