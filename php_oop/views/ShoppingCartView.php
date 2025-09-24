@@ -2,9 +2,10 @@
 require_once('PageView.php');
 
 class ShoppingCartView extends PageView{
-    $cart_items;
+    private $cart_items;
 
-    function __construct($cart_items){
+    function __construct($menu, $cart_items){
+        // parent::__construct($menu);
         $this->cart_items = $cart_items;
     }
 

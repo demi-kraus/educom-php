@@ -1,9 +1,9 @@
 <?php
 class PageView{
-    $menu;
+    protected $menu;
     // $error_message;
 
-    function __construct($menu, $error_message='' ){
+    function __construct($menu='', $error_message='' ){
         $this->menu = $menu;
         // $this->error_message = $error_message;
     }
@@ -13,15 +13,22 @@ class PageView{
         $this->beginHeader();
         $this->headerContent();
         $this->endHeader();
-        $this->showMenu($this->menu)
+        if (!empty($this->menu)){
+            require_once('MenuView.php');
+            $menuView = new MenuView($this->menu);
+            $menuView->showMenu();}
         $this->beginBody();
         $this->bodyContent();
         $this->endBody();
+        $this->beginFooter();
+        $this->footerContent();
+        $this->endFooter();
         $this->endDoc();
     }
 
     function beginDoc() { 
-        $cssfile = '"../css/style.css"';
+        echo "<!DOCTYPE html>\n<html>";
+        $cssfile = '"css/style.css"';
         echo "<head>
             <link rel=\"stylesheet\" href= $cssfile/>
         </head>";
@@ -31,17 +38,13 @@ class PageView{
         echo '<header>';
     }
     function headerContent($title = 'WELCOME!') { 
-        echo $title;
+        echo '<h1>'.$title.'</h1>';
     }
     
-   function showMenu($menu){
-    echo "<ul class=\"menu\"> ";
-    foreach ($menu as $item => $link){
-        // $item = strtoupper($item);
-       echo "<li> <a href= \"".$link."\">". $item . "</a> </li>";
+    function endHeader(){
+        echo '</header>';
     }
-    echo "</ul>";
-    }
+
     
     function beginBody() {
         echo '<body>';
@@ -63,7 +66,9 @@ class PageView{
     function endFooter(){
         echo '</footer>';
     }
-    function endDoc(){ }
+    function endDoc(){
+        echo '</html>';
+     }
 
 
 }

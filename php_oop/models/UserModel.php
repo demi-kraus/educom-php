@@ -1,9 +1,9 @@
 <?php
 class UserModel{
-    protected $db;
+    protected $conn;
     
-    private __construct($db){
-        $this->db = $db
+    public function __construct($conn){
+        $this->conn = $conn;
     }
     
     //login
@@ -21,14 +21,14 @@ class UserModel{
             $this->error = 'Invalid Credentials';
             $page = $_POST['page'];
         }
-        return array('error'=>$error, 'page' => $page)
+        return array('error'=>$error, 'page' => $page);
     }
 
     //register
     public function register($email, $username, $password, $repeat_password){
         $error = null;
         $page = null;
-        $result = findEmail($email);
+        $result = $this->findEmail($email);
         $row = $result->fetch_assoc();
         // check number if rows if 0 and passwords map add user. otherwise
         if ($result->num_rows > 0) {
@@ -44,13 +44,13 @@ class UserModel{
             $stmt->execute();
             $stmt->close();
         }
-        return array('error'=>$error, 'page' => $page)
+        return array('error'=>$error, 'page' => $page);
     }
 
     //find results where user email is in table
     private function findEmail($email){
         // find row where email = email
-        $stmt = $this->->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();

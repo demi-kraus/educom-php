@@ -1,14 +1,15 @@
 <?php
 require_once('PageView.php');
 class FormView extends PageView{
-    $form_info;
+    private $form_info;
 
-    private function __construct($form_info){
-        $this->form_info;
+    public function __construct($menu, $form_info){
+        parent::__construct($menu);
+        $this->form_info = $form_info;
     }
 
-    public bodyContent(){
-        showForm($this->form_info);
+    public function bodyContent(){
+        $this->showForm($this->form_info);
     }
     
     private function showForm($form_info){

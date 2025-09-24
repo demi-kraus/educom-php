@@ -1,18 +1,22 @@
 <?php
+  // !!!!!!!!!!!!!!!!!!!!!!!MOET NOG gesplists worden model/view/controller
 require_once('PageView.php');
 
 class WebshopView extends PageView{
-    $db;
-    function __construct($db){
+    protected $db;
+    function __construct($menu, $db){
+        parent::__construct($menu);
         $this->db = $db;
     }
     function bodyContent(){
-        $this->showItemList;
+        echo 'work in progress...';
+        // $this->showItemList();
     }
 
     function showItemList(){
+        // !!!!!!!!!!!!!!!!!!!!!!!MOET NOG NAAR MODEL
         // Get webshop items from database
-        $result = $db->qetQueryResults('SELECT * FROM webshop_items');
+        $result = $this->db->qetQueryResults('SELECT * FROM webshop_items');
 
         $page = "index.php?page=webshop_item"; 
 
