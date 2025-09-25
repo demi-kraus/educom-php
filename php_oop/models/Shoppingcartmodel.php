@@ -1,10 +1,10 @@
 <?php
 
 class ShoppingcartModel{
-    $db;
+    private $conn;
 
-    function __construct($db){
-        $this->$db = $db;
+    function __construct($conn){
+        $this->conn= $conn;
     }
 
     function getOrders(){
@@ -16,9 +16,10 @@ class ShoppingcartModel{
         // find order ids in webshop_item table
         $total_price = 0;
 
+        $items = []; // initiate items
         foreach ($order as $item_id => $count){
                 $sql = 'SELECT * FROM webshop_items where id='.$item_id;
-                $result = $db->getQueryResults($sql);
+                $result = $this->conn->query($sql);
                 $row = $result->fetch_assoc();
 
                 $items[] = [
@@ -26,9 +27,9 @@ class ShoppingcartModel{
                     'name' => $row['name'],
                     'price' => $row['price'],
                     'count' => $count,
-                    'subtotal' => $count*$item_price];
+                    'subtotal' => $count*$row['price']];
 
-                $total_price += $total_item_price;
+                $total_price += $count*$row['price'];
             }
         return array('items'=> $items, 'total' => $total_price);
         }
@@ -36,10 +37,10 @@ class ShoppingcartModel{
     function checkout(){
 
         // write orders to database
-        $stmt = $db->prepare("INSERT INTO orders ( name, price, amount, item_id) VALUES (?,?,?,?)");
+        $stmt = $this->conn->prepare("INSERT INTO orders ( name, price, amount, item_id) VALUES (?,?,?,?)");
         $stmt->bind_param("sdii", $name, $price, $amount, $item_id);
 
-        $items = $this->getOrders()
+        $items = $this->getOrders();
 
         foreach ($items['items'] as $item){
             $name = $item['name'];

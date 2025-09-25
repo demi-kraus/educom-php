@@ -8,7 +8,6 @@ class UserModel{
     
     //login
     public function login($email, $password){
-        $error = null;
         $page = null;
         $result = $this->findEmail($email);
         $row = $result->fetch_assoc();
@@ -18,24 +17,23 @@ class UserModel{
             $_SESSION['login'] = true;
             $_SESSION['username']  = $row['name'];
         } else {
-            $this->error = 'Invalid Credentials';
             $page = $_POST['page'];
+            $_POST['form_error'] =  'Invalid Credentials';
         }
-        return array('error'=>$error, 'page' => $page);
+        return  $page;
     }
 
     //register
     public function register($email, $username, $password, $repeat_password){
-        $error = null;
         $page = null;
         $result = $this->findEmail($email);
         $row = $result->fetch_assoc();
         // check number if rows if 0 and passwords map add user. otherwise
         if ($result->num_rows > 0) {
-            $error = 'E-mail is already registerd';
+            $_POST['form_error'] = 'E-mail is already registered';
             $page = $_POST['page'];
         }elseif (($result->num_rows == 0) and (strcmp($password, $repeat_password) != 0)){  
-            $error = 'Passwords do not match';
+            $_POST['form_error'] = 'Passwords do not match';
             $page = $_POST['page'];
         } elseif(($result->num_rows == 0) and (strcmp($password, $repeat_password) == 0)){
             // add data to table
@@ -44,7 +42,7 @@ class UserModel{
             $stmt->execute();
             $stmt->close();
         }
-        return array('error'=>$error, 'page' => $page);
+        return $page;
     }
 
     //find results where user email is in table

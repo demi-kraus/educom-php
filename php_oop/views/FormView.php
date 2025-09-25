@@ -15,6 +15,10 @@ class FormView extends PageView{
     private function showForm($form_info){
         $page = $form_info['page'];
         $fields = $form_info['fields'];
+        
+        if(isset($_POST['form_error']))
+            {echo '<span class="error">'.$_POST['form_error'].'</span>';}
+
         $this->openForm($page);
         $this->showFields($fields); 
         $this->closeForm(); 

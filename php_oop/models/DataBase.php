@@ -11,8 +11,6 @@ class DataBase{
         if ($this->conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-
-        return $this->conn;
     }
 
     public function getQueryResults($sql){

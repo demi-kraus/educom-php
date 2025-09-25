@@ -1,24 +1,30 @@
 <?php
 
-class WebshopModel(){
-    protected $db;
+class WebshopModel{
+    protected $conn;
     
-    private __construct($db){
-        $this->db = $db
+    public function __construct($conn){
+        $this->conn = $conn;
     }
 
-    function getItemProperties($item_id){
-        // get item properties from db
-      
-        $sql = 'SELECT * FROM webshop_items WHERE id='.$item_id;
-        $result = $this->db->getQueryResults($sql);
-        //check if item exists
-        if ($result->num_rows > 0){
-            $item = $result->fetch_assoc();
-        } else{
-            echo 'No item found';
+    function getWebshopItems($item_id=''){
+        $sql = 'SELECT * FROM webshop_items';
+
+        // if item id is given only get row with item id;
+        if (!empty($item_id)){$sql .= ' WHERE id='.$item_id;}
+        
+        $result = $this->conn->query($sql);
+        // show webshop items
+        while($row = $result->fetch_assoc()){
+                $items[] = [
+                    'id' => $row['id'],
+                    'name' => $row['name'],
+                    'image' => $row['image'],
+                    'price' => $row['price'],
+                    'description' => $row['description']];
         }
-        return $item;
+        return $items;
     }
+
 }
 ?>
