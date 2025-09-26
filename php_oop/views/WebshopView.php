@@ -1,5 +1,4 @@
 <?php
-  // !!!!!!!!!!!!!!!!!!!!!!!MOET NOG gesplists worden model/view/controller
 require_once('PageView.php');
 
 class WebshopView extends PageView{
@@ -23,7 +22,7 @@ class WebshopView extends PageView{
             echo '<img src= "images/'.$item['image'].'" alt = "webshopitem" width = 100 >'; // item image
             echo '<br><span> &euro; '.$item['price'].' </span>' ; //item price
 
-            if ($_SESSION['login']){ //show only when logged in
+            if ($_SESSION['login']??false){ //show only when logged in
                 $this->orderButton($item['id'] );
                 }
             echo '</section>';

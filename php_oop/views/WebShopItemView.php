@@ -20,9 +20,9 @@ class WebshopItemView extends PageView{
         echo '<span class="price"> &euro;'.$this->item['price'].'</span>';
         echo '<span>'.$this->item['description'].'</span>';
         echo '<img src= "images/'.$this->item['image'].'" alt = "webshopitem"';
-        if ($_SESSION['login']){ //show only when logged in
+        if ($_SESSION['login']?? false) { //show only when logged in
             $this->orderButton($this->item['id']);
-        }
+            echo $this->item['id'];
         echo '</section>';
     }
 

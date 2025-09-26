@@ -218,7 +218,7 @@ function orderButton($value, $type='order'){
 }
 // =========================
 // Shopping cart
-// =========================
+// ========================= 
 
 function checkout(){
     // check for POST for checkout

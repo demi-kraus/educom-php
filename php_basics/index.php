@@ -11,7 +11,7 @@ if ($page == 'logout'){session_unset();}
 $_SESSION['login'] = isset($_SESSION['login'] ) ? $_SESSION['login'] : false;
 
 // test POST 
-include('includes/handlers.php');
+// include('includes/handlers.php');
 if (($_SERVER["REQUEST_METHOD"] == "POST") and (isset($_POST['page']))){
 
     switch($_POST['page']){

@@ -43,6 +43,7 @@ class Controller{
             }
         }
 
+        
         // check post item_id for orders
         if (!isset($_SESSION['orders'])) {
             $_SESSION['orders'] = []; // Initialize only once, not on every request
