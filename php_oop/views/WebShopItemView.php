@@ -24,6 +24,7 @@ class WebshopItemView extends PageView{
             $this->orderButton($this->item['id']);
             echo $this->item['id'];
         echo '</section>';
+        }
     }
 
    function orderButton($value){
