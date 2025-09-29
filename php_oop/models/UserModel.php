@@ -13,14 +13,11 @@ class UserModel{
         $row = $result->fetch_assoc();
         // check number if rows, if =1 than check password, otherwise invalid & check password
         if (($result->num_rows == 1) and (strcmp($password, $row['password']) == 0)){  
-            // $login = true;
-            $_SESSION['login'] = true;
-            $_SESSION['username']  = $row['name'];
+            $login = true;
         } else {
-            $page = $_POST['page'];
-            $_POST['form_error'] =  'Invalid Credentials';
+            $login = false
         }
-        return  $page;
+        return $login
     }
 
     //register
@@ -30,19 +27,18 @@ class UserModel{
         $row = $result->fetch_assoc();
         // check number if rows if 0 and passwords map add user. otherwise
         if ($result->num_rows > 0) {
-            $_POST['form_error'] = 'E-mail is already registered';
-            $page = $_POST['page'];
+            $register = [false, 'email_error'];
         }elseif (($result->num_rows == 0) and (strcmp($password, $repeat_password) != 0)){  
-            $_POST['form_error'] = 'Passwords do not match';
-            $page = $_POST['page'];
+            $register = [false, 'password_error'];
         } elseif(($result->num_rows == 0) and (strcmp($password, $repeat_password) == 0)){
             // add data to table
             $stmt = $this->conn->prepare("INSERT INTO users (email, name, password) VALUES (?,?,?)");
             $stmt->bind_param('sss', $email, $username, $password);
             $stmt->execute();
             $stmt->close();
+            $register = [true, null];
         }
-        return $page;
+        return $register
     }
 
     //find results where user email is in table

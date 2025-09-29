@@ -27,8 +27,7 @@ class ShoppingCartView extends PageView{
     
         echo '<br>';
         echo '<b>Total: &euro;'.number_format($this->cart_items['total'],2).'<b>';
-
-        $this->checkoutButton(true, $type='checkout');
+        $this->checkoutButton(true);
     }
 
     function checkoutButton($value){

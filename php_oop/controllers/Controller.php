@@ -29,7 +29,14 @@ class Controller{
                     // test login'
                     $email = trim($_POST['email']);
                     $password = trim($_POST['password']);
-                    $this->page= $this->UserModel->login($email, $password);
+                    // $this->page= $this->UserModel->login($email, $password);
+                    if($this->UserModel->login($email, $password)){
+                        $_SESSION['login'] = true;
+                        $_SESSION['username']  = $row['name'];
+                    } else{
+                        $this->page = $_POST['page'];
+                        $_POST['form_error'] =  'Invalid Credentials';
+                    }
                     break;
 
                 case 'register':
@@ -37,8 +44,17 @@ class Controller{
                     $username = $_POST['name'];
                     $password = trim($_POST['password']);
                     $repeat_password = trim($_POST['repeat_password']);
-                    $this->page = $this->UserModel->register($email, $username, $password, $repeat_password);
-                    echo 'Register';
+                    // $this->page = $this->UserModel->register($email, $username, $password, $repeat_password);
+                    $register = $this->UserModel->register($email, $username, $password, $repeat_password);
+                    if ((!$register[0]) && ($register(1)=='email_error')) {
+                        $_POST['form_error'] = 'E-mail is already registered';
+                        $this->page = $_POST['page'];
+                    } elseif ((!$register[0]) && ($register(1)=='password_error')) {
+                        $_POST['form_error'] = 'Passwords do not match';
+                        $this->page = $_POST['page'];
+                    }
+
+                    break;
                     break;
             }
         }
