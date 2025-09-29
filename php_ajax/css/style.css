@@ -1,0 +1,137 @@
+/* General */
+body{
+    width: 800px;
+    margin: 0px auto;
+    position: relative; 
+    font-size: 12px;
+    color: #555555;
+    background-color: #ffffff;
+}
+
+
+.error{
+    color:rgb(255, 0, 0);
+}
+
+/* header */
+header {
+    height: 48px;
+    text-align:center;
+    padding: 10px;
+    color: #000;
+}
+
+ul.menu{
+    display: flex;
+    gap: 5px;
+    padding-inline-start: 0px;
+}
+
+ul.menu li {
+    list-style-type: none;
+    padding: 5px;
+    margin-bottom: 20px;
+    background-color: rgb(0, 140, 255);
+    cursor: pointer;
+}
+
+ul.menu li:hover {
+    background-color: rgb(2, 105, 189);
+}
+
+ul.menu li > a{
+    color: #FFF;
+    text-decoration: none;
+}
+
+
+/* form */
+.form input{
+    width:400px;
+}
+
+.form textarea{
+    width:400px;
+}
+
+.form input[type=submit] {
+    background-color: rgb(0, 140, 255);
+    color: #FFF;
+    width: auto;
+    cursor: pointer;
+}
+
+.form input[type=submit]:hover {
+    background-color: rgb(2, 105, 189);
+    color: #FFF;
+    width: auto;
+    border: 1px inset;
+}
+
+
+/* webshop */
+.webshop-item{
+    margin: 10px auto;
+    width: 600px;
+    height:125px;
+    background-color: antiquewhite;
+    padding:20px;
+    position:relative;
+    margin-inline: auto;
+}
+
+.webshop-item img{
+    right:100px;
+    bottom: 25%;
+    position:absolute;
+}
+
+.webshop-item a{
+    color:#555555;
+    font-size: 30px;
+    text-decoration: None;
+}
+
+.webshop-item a:hover{
+    font-weight: bold;
+    text-decoration:underline;
+}
+
+.webshop-item span {
+    font-size: 20px;
+}
+
+.webshop-item form {
+    margin-top: 40px; 
+}
+
+.order-button {
+    background-color: #f5d271;
+    border: 2px outset;
+    cursor: pointer;
+}
+
+.order-button:hover {
+    background-color: #f5bc71;
+    border: 2px inset;
+}
+
+.price {
+    display: block;
+    font-size: 20px;
+    margin-block-end: 5px;
+}
+
+.item-page img {
+    display: block;
+    width: 400px;
+    height: 400px;
+}
+
+/* footer */
+footer{
+    font-size: 10px;
+    right:0 ;
+    position: absolute;
+}
+
