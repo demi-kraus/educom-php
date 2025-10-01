@@ -23,17 +23,18 @@ class WebshopView extends PageView{
             echo '<br><span> &euro; '.$item['price'].' </span>' ; //item price
 
             if ($_SESSION['login']??false){ //show only when logged in
-                $this->orderButton($item['id'] );
+                $this->orderButton($item['id']);
                 }
             echo '</section>';
         }
     }
 
-    function orderButton($value){
+    function orderButton($item_id){
         echo '<form action="" method="POST">
-                <input type="hidden" name= "item_id" value="'.$value.'" >
+                <input type="hidden" name= "item_id" value="'.$item_id.'" >
                 <input class="order-button" type="submit" value= "Order">
               </form>';
     }
 }
+
 ?>

@@ -2,15 +2,15 @@
 require_once('PageView.php');
 
 class ShoppingCartView extends PageView{
-    private $cart_items;
+    private $cart;
 
-    function __construct($menu, $cart_items){
+    function __construct($menu, $cart){
         parent::__construct($menu);
-        $this->cart_items = $cart_items;
+        $this->cart = $cart;
     }
 
     function bodyContent(){
-        if (empty($this->cart_items['items'])){
+        if (empty($this->cart['items'])){
             echo '<h2> Shopping cart is empty </h2>';}
         else{$this->ShowOrderList();}
     }
@@ -18,15 +18,15 @@ class ShoppingCartView extends PageView{
     function ShowOrderList(){
         echo '<h2> Order list </h2>';
 
-        foreach ($this->cart_items['items'] as $item){
+        foreach ($this->cart['items'] as $item){
             echo ucfirst($item['name']).' - price:&euro;
-                '.number_format($item['price'],2).' - amount:'.$item['count'].' - &euro;'
+                '.number_format($item['price'],2).' - amount:'.$item['qty'].' - &euro;'
                 .number_format($item['subtotal'],2);
             echo '<br>';   
         }
     
         echo '<br>';
-        echo '<b>Total: &euro;'.number_format($this->cart_items['total'],2).'<b>';
+        echo '<b>Total: &euro;'.number_format($this->cart['total'],2).'<b>';
         $this->checkoutButton(true);
     }
 
