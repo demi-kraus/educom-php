@@ -9,15 +9,15 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 $isajax = _getVar("action") =="ajaxcall";
 
-// handle request
+// handle request // controller
 if ($isajax){
   _handleAjaxRequest($conn);
 } else {
   _handlePageRequest();
 }
 
-function _handleAjaxRequest($conn){
-  $func = _getVar('func');
+function _handleAjaxRequest($conn){ // controller
+  $func = _getVar('func');   
   switch ($func){
     case 'setRating':
       $user_id = _getVar('user_id');
@@ -31,7 +31,7 @@ function _handleAjaxRequest($conn){
   }
 }
 
-function _handlePageRequest(){
+function _handlePageRequest(){ // controller/view
   echo '<html lang="en">
           <head>   
             <link rel="stylesheet" href="css/style.css"/>
@@ -52,17 +52,18 @@ function _handlePageRequest(){
 
 }
 
-function _getVar($name, $default='No'){
+function _getVar($name, $default='No'){ //controller
   return isset($_GET[$name])? $_GET[$name] : $default;
 }
 
-function _echoAverageRating($avgRating){
+function _echoAverageRating($avgRating){ // model
   
   $data = array('target' => '#avgRating', 'content' => $avgRating);
+  header('Content-Type: application/json');
   echo json_encode($data);
 }
 
-function getAverageRating($conn, $item_id){
+function getAverageRating($conn, $item_id){// model
     $sql = 'SELECT AVG(rating) FROM ratings WHERE product_id='.$item_id;
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
@@ -71,7 +72,7 @@ function getAverageRating($conn, $item_id){
 }
 
 function saveRating($conn, $rating, $item_id, $user_id){
-    $sql = 'SELECT * FROM ratings 
+    $sql = 'SELECT * FROM ratings // model
                 WHERE product_id='.$item_id.' AND user_id='.$user_id ;
     $result = $conn->query($sql);
     // if not found add rating to table

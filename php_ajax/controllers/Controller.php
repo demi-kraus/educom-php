@@ -109,6 +109,11 @@ class Controller{
                 $WebshopModel = new WebshopModel($this->db->conn);
                 $webshop_item = $WebshopModel->getWebshopItems($_GET['id']);
 
+                // rating 
+                require_once('RatingController.php');
+                $RatingController =  new RatingController($this->db->conn);
+                // $RatingController->handleRequest();
+    
                 require_once('views/WebshopItemView.php');
                 $pageView = new WebshopItemView($menu, $webshop_item);
                 $pageView->show();

@@ -10,6 +10,11 @@ class WebshopItemView extends PageView{
 
     function bodyContent(){
         $this->showItemPage();
+        $this->showRating();
+        // show rating only when logged in
+        // if ($_SESSION['login'] ?? false){
+        //     $this->showRating();
+        // }
     }
 
     function ShowItemPage(){
@@ -33,6 +38,26 @@ class WebshopItemView extends PageView{
                 <input type="hidden" name= "item_id" value="'.$item_id.'" >
                 <input class="order-button" type="submit" value= "Order">
               </form>';
+    }
+
+    function showRating(){
+          echo '<html lang="en">
+                <head>   
+                    <link rel="stylesheet" href="css/style.css"/>
+                    <script src="js/jquery.js"></script>
+                    <script src = "js/rating.js"> </script>
+                </head>
+
+                <body>
+                    
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                    <span id="avgRating"></span>
+                </body>
+                </html>';
     }
 }   
 ?>

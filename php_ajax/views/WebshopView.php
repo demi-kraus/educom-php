@@ -12,6 +12,7 @@ class WebshopView extends PageView{
 
     function bodyContent(){
         $this->showItemList();
+
     }
 
     function showItemList(){
@@ -35,6 +36,8 @@ class WebshopView extends PageView{
                 <input class="order-button" type="submit" value= "Order">
               </form>';
     }
+
+
 }
 
 ?>
