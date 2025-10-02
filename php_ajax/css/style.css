@@ -135,3 +135,39 @@ footer{
     position: absolute;
 }
 
+/* css/style.css */
+.button{
+    padding: 10px;
+    width: 200px;
+    font-size:16px;
+    background-color: #000;
+    color: #FFF;
+    cursor: pointer;
+    text-align: center;
+    transition: all ease 0.4s;
+}
+
+.button:hover {
+    background-color:#CCC;
+}
+
+.window {
+    width:600px;
+    height: 200px;
+    background-color: #F00;
+    display: none;
+}
+.star {
+    font-size: 30px;
+    color: #000;
+    cursor:pointer;
+    width: 50px;
+}
+
+.star:hover{
+    color:#F00;
+}
+
+.red{
+    color:#F00
+}
