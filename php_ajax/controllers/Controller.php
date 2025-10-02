@@ -6,62 +6,62 @@ class Controller{
 
     function __construct($db){
         $this->db = $db;
-        require_once('models/UserModel.php');
-        $this->UserModel = new Usermodel($db->conn);
     }
 
     function handleRequest(){
-        //initiate $page
-        $this->page = $_GET['page'] ?? "home";
+        // get page request
+        $request = $this->getRequest();
+        // validate page request
+        $result = $this->validateRequest($request); 
 
+        $this-> page = $result['page'];
         //if logged out, reset session variables
         if ($this->page == 'logout'){session_unset();}
-    
-        // check post page
-        if (($_SERVER["REQUEST_METHOD"] == "POST") and (isset($_POST['page']))){
+        
+        // ShoppingCart         
+        if (!isset($_SESSION['shoppingCart'])) {
+            $_SESSION['shoppingCart'] = []; 
+        } elseif (($_SERVER["REQUEST_METHOD"] == "POST")){
+            $this->shoppingCart();
+        }
 
-            switch($_POST['page']){
-                case 'form_results':
-                    $this->page = $_POST['page'];
-                    break;
-                    
+        // Display page
+        $this->DisplayPage();
+    }
+
+   function getRequest(){
+        $posted = (($_SERVER["REQUEST_METHOD"] == "POST") and (isset($_POST['page'])));
+        $get = $_GET['page'] ?? 'home' ;
+        $page  = $posted ? $_POST['page']  : $get ;
+        return ['posted' => $posted, 'page' => $page];
+    }
+
+    function validateRequest($request){
+        $result = $request;
+        if ($request['posted']){
+            switch ($request['page']){
                 case 'login':
-                    // test login'
-                    $email = trim($_POST['email']);
-                    $password = trim($_POST['password']);
-                    $this->page= $this->UserModel->login($email, $password);
+                    require_once('UserController.php');
+                    $UserController = new UserController($this->db);
+                    $UserController->login();
+                    $result['page'] = $_SESSION['login'] ? 'home' : 'login' ;
                     break;
-
                 case 'register':
-                    $email = trim($_POST['email']);
-                    $username = $_POST['name'];
-                    $password = trim($_POST['password']);
-                    $repeat_password = trim($_POST['repeat_password']);
-                    $this->page = $this->UserModel->register($email, $username, $password, $repeat_password);
-                    echo 'Register';
+                    require_once('UserController.php');
+                    $UserController = new UserController($this->db);
+                    $UserController->register();
                     break;
             }
         }
-
-        
-        // check post item_id for orders
-        if (!isset($_SESSION['orders'])) {
-            $_SESSION['orders'] = []; // Initialize only once, not on every request
-        } elseif (($_SERVER["REQUEST_METHOD"] == "POST") and (isset($_POST['item_id']))){
-             $_SESSION['orders'][] = $_POST['item_id'];
-        }
-
-        // check for POST for checkout
-        if (($_SERVER["REQUEST_METHOD"] == "POST") and (isset($_POST['checkout']))){
-            require_once('../models/ShoppingcartModel.php');
-            $ShoppingcartModel = new ShoppingcartModel();
-            $ShoppingcartModel->checkout();
-        }
-
-        $this->DisplayPage();
-  
+        return $result;
     }
 
+    function shoppingCart(){
+        require_once('CartController.php');
+        $CartController = new CartController($this->db->conn);
+        $CartController->handleRequest();
+    }
+    
     private function DisplayPage(){
         // page
         $menu = $this->buildMenu();
@@ -115,11 +115,13 @@ class Controller{
                 break;
             case 'shopping_cart':
                 require_once('models/ShoppingCartModel.php');
-                $CartModel = new ShoppingCartModel($this->db->conn);
-                $cart_items = $CartModel->getOrders();
+                if (isset($_SESSION['shoppingCart'])){
+                    $CartModel = new ShoppingCartModel($this->db->conn);
+                    $cart = $CartModel->getOrders();}
+                else {$cart['items'] = [];}
  
                 require_once('views/ShoppingCartView.php');
-                $pageView = new ShoppingCartView($menu, $cart_items);
+                $pageView = new ShoppingCartView($menu, $cart);
                 $pageView->show();
                 break;
             default:
@@ -130,7 +132,7 @@ class Controller{
 
             }
         }  
-    
+ 
     function buildMenu(){
         // show Menu;
         $menu = array("HOME" => "index.php?page=home", 

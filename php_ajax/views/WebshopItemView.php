@@ -20,31 +20,19 @@ class WebshopItemView extends PageView{
         echo '<span class="price"> &euro;'.$this->item['price'].'</span>';
         echo '<span>'.$this->item['description'].'</span>';
         echo '<img src= "images/'.$this->item['image'].'" alt = "webshopitem">';
+        
         if ($_SESSION['login']?? false) { //show only when logged in
             $this->orderButton($this->item['id']);
-            echo '<br>';
-            $this->showRating();
+
         }
         echo '</section>';
     }
 
-   function orderButton($value){
+   function orderButton($item_id){
         echo '<form action="" method="POST">
-                <input type="hidden" name= "item_id" value="'.$value.'" >
+                <input type="hidden" name= "item_id" value="'.$item_id.'" >
                 <input class="order-button" type="submit" value= "Order">
               </form>';
     }
-
-    function showRating(){
-        echo '<script src="js/jquery.js"></script>';
-        echo '<script src="js/rating.js"></script>';
-
-        echo '<span class="star" data-value="1">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>';
-    }
-    
-}
+}   
 ?>
