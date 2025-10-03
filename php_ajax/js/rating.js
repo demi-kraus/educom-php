@@ -3,8 +3,8 @@ $(document).ready( function() {
 
     $(".star").click( function() {
     const value = $(this).attr('data-value')
-    const item_id = 1
-    const user_id = 1
+    const item_id = $("#item_id").attr('data-value')
+    const user_id = $("#user_id").attr('data-value')
 
     // clear all red stars
     $(".star").removeClass('red')
@@ -20,8 +20,12 @@ $(document).ready( function() {
     // send ajax request
     $.ajax({
         type : 'GET',
-        url : 'test_ajax.php?action=ajaxcall&func=setRating',
-        data: {rating:value, user_id:user_id, item_id:item_id},
+        url : 'http://localhost/educom-php/php_ajax/index.php?',
+        data: {action: "ajaxcall",
+                func: "setRating",
+                rating: value,
+                item_id: item_id,
+                user_id: user_id},
         dataType : 'json',
         success: function(data){
             $(data.target).html(data.content);
