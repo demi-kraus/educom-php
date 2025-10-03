@@ -13,7 +13,6 @@ class RatingModel{
         return $this->getAverageRating;
     }
 
-
     private function getAverageRating(){// model
         $sql = 'SELECT AVG(rating) FROM ratings WHERE product_id='.$this->item_id;
         $result = $this->conn->query($sql);

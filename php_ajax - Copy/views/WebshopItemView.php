@@ -10,11 +10,10 @@ class WebshopItemView extends PageView{
 
     function bodyContent(){
         $this->showItemPage();
-        $this->showRating();
         // show rating only when logged in
-        // if ($_SESSION['login'] ?? false){
-        //     $this->showRating();
-        // }
+        if ($_SESSION['login'] ?? false){
+            $this->showRating();
+        }
     }
 
     function ShowItemPage(){
